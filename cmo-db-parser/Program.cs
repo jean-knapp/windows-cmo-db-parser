@@ -28,7 +28,7 @@ namespace cmo_db_parser
             // Read the tables in the database
             CMODatabase.ReadTables(sqlFilePath);
 
-            Export.ExportAircrafts();
+            Export.ExportCSVs();
             ConsoleExtensions.Pause();
         }
 

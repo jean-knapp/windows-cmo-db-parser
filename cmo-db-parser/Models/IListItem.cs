@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace cmo_db_parser.Models
 {
-    public interface IData
+    public interface IListItem
     {
         /// <summary>
         /// Represents the properties of the table in the database, in order
@@ -19,5 +22,12 @@ namespace cmo_db_parser.Models
         /// Represents the unique identifier for the data.
         /// </summary>
         int ID { get; set; }
+
+        /// <summary>
+        /// Represents the unique identifier for the data.
+        /// </summary>
+        int ComponentID { get; set; }
+
+        void AssignComponents();
     }
 }

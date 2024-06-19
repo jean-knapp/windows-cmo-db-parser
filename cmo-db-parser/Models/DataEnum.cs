@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace cmo_db_parser.Models
 {
-    public class DataEnum : IData
+    public class DataEnum : IData, IDataTable
     {
         public virtual string TableName { get; }
 

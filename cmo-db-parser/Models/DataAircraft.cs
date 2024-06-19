@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace cmo_db_parser.Models
 {
-    public class Aircraft : IData
+    public class DataAircraft : IData, IDataTable
     {
         public string TableName { get; } = "DataAircraft";
 
@@ -12,7 +12,7 @@ namespace cmo_db_parser.Models
         public List<(Type, string)> Properties { get; } = new List<(Type, string)>()
         {
             (typeof(int), nameof(ID)), // ID
-            (typeof(int), nameof(Category)), // Category
+            (typeof(EnumAircraftCategory), nameof(Category)), // Category
             (typeof(EnumAircraftType), nameof(Type)), // Type
             (typeof(string), nameof(Name)), // Name
             (typeof(string), nameof(Comments)), // Comments
@@ -31,20 +31,20 @@ namespace cmo_db_parser.Models
             (typeof(double), nameof(ClimbRate)), // ClimbRate
             (typeof(EnumAircraftAutonomousControlLevel), nameof(AutonomousControlLevel)), // AutonomousControlLevel
             (typeof(EnumAircraftCockpitGen), nameof(CockpitGen)), // CockpitGen
-            (typeof(int), nameof(Ergonomics)), // Ergonomics
+            (typeof(EnumErgonomics), nameof(Ergonomics)), // Ergonomics
             (typeof(int), nameof(OADADetectionCycle)), // OADADetectionCycle
             (typeof(int), nameof(OADATargetingCycle)), // OADATargetingCycle
             (typeof(int), nameof(OADAEvasiveCycle)), // OADAEvasiveCycle
             (typeof(int), nameof(TotalEndurance)), // TotalEndurance
-            (typeof(int), nameof(PhysicalSizeCode)), // PhysicalSizeCode
-            (typeof(int), nameof(RunwayLengthCode)), // RunwayLengthCode
+            (typeof(EnumAircraftPhysicalSize), nameof(PhysicalSizeCode)), // PhysicalSizeCode
+            (typeof(EnumRunwayLength), nameof(RunwayLengthCode)), // RunwayLengthCode
             (typeof(bool), nameof(Hypothetical)), // Hypothetical
             (typeof(int), nameof(Cost)), // Cost
             (typeof(double), nameof(DamagePoints)), // DamagePoints
-            (typeof(int), nameof(AircraftEngineArmor)), // AircraftEngineArmor
-            (typeof(int), nameof(AircraftFuselageArmor)), // AircraftFuselageArmor
-            (typeof(int), nameof(AircraftCockpitArmor)), // AircraftCockpitArmor
-            (typeof(string), nameof(Visibility)), // Visibility
+            (typeof(EnumArmorType), nameof(AircraftEngineArmor)), // AircraftEngineArmor
+            (typeof(EnumArmorType), nameof(AircraftFuselageArmor)), // AircraftFuselageArmor
+            (typeof(EnumArmorType), nameof(AircraftCockpitArmor)), // AircraftCockpitArmor
+            (typeof(EnumAircraftCockpitVisibility), nameof(Visibility)), // Visibility
             (typeof(int), nameof(FuelOffloadRate)), // FuelOffloadRate
             (typeof(bool), nameof(Deprecated)) // Deprecated
         };
@@ -57,7 +57,7 @@ namespace cmo_db_parser.Models
         /// <summary>
         /// Represents the category of the aircraft.
         /// </summary>
-        public int Category { get; set; }
+        public EnumAircraftCategory Category { get; set; }
 
         /// <summary>
         /// Represents the type of the aircraft.
@@ -152,7 +152,7 @@ namespace cmo_db_parser.Models
         /// <summary>
         /// Represents the ergonomics of the aircraft.
         /// </summary>
-        public int Ergonomics { get; set; }
+        public EnumErgonomics Ergonomics { get; set; }
 
         /// <summary>
         /// Represents the OADA detection cycle of the aircraft.
@@ -177,12 +177,12 @@ namespace cmo_db_parser.Models
         /// <summary>
         /// Represents the physical size code of the aircraft.
         /// </summary>
-        public int PhysicalSizeCode { get; set; }
+        public EnumAircraftPhysicalSize PhysicalSizeCode { get; set; }
 
         /// <summary>
         /// Represents the runway length code of the aircraft.
         /// </summary>
-        public int RunwayLengthCode { get; set; }
+        public EnumRunwayLength RunwayLengthCode { get; set; }
 
         /// <summary>
         /// Indicates whether the aircraft is hypothetical.
@@ -202,22 +202,22 @@ namespace cmo_db_parser.Models
         /// <summary>
         /// Represents the armor rating of the aircraft's engine.
         /// </summary>
-        public int AircraftEngineArmor { get; set; }
+        public EnumArmorType AircraftEngineArmor { get; set; }
 
         /// <summary>
         /// Represents the armor rating of the aircraft's fuselage.
         /// </summary>
-        public int AircraftFuselageArmor { get; set; }
+        public EnumArmorType AircraftFuselageArmor { get; set; }
 
         /// <summary>
         /// Represents the armor rating of the aircraft's cockpit.
         /// </summary>
-        public int AircraftCockpitArmor { get; set; }
+        public EnumArmorType AircraftCockpitArmor { get; set; }
 
         /// <summary>
         /// Represents the visibility rating of the aircraft.
         /// </summary>
-        public string Visibility { get; set; }
+        public EnumAircraftCockpitVisibility Visibility { get; set; }
 
         /// <summary>
         /// Represents the fuel offload rate of the aircraft.

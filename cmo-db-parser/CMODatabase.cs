@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,15 @@ namespace cmo_db_parser
             ("EnumAircraftType", typeof(EnumAircraftType)),
             ("EnumAircraftAutonomousControlLevel", typeof(EnumAircraftAutonomousControlLevel)),
             ("EnumAircraftCockpitGen", typeof(EnumAircraftCockpitGen)),
-            ("DataAircraft", typeof(Aircraft)),
+            ("EnumErgonomics", typeof(EnumErgonomics)),
+            ("EnumAircraftPhysicalSize", typeof(EnumAircraftPhysicalSize)),
+            ("EnumRunwayLength", typeof(EnumRunwayLength)),
+            ("EnumArmorType", typeof(EnumArmorType)),
+            ("EnumAircraftCockpitVisibility", typeof(EnumAircraftCockpitVisibility)),
+            ("EnumAircraftCategory", typeof(EnumAircraftCategory)),
+            ("DataAircraft", typeof(DataAircraft)),
+            ("DataLoadout", typeof(DataLoadout)),
+            ("DataAircraftLoadouts", typeof(DataAircraftLoadouts))
         };
 
         /// <summary>
@@ -77,83 +86,138 @@ namespace cmo_db_parser
 
             foreach (var table in DataTables)
             {
-                // Create an instance of the IData implementation using reflection
-                IData dataInstance = (IData)Activator.CreateInstance(table.DataType);
-
-                string query = $"SELECT * FROM {dataInstance.TableName}";
+                string query = $"SELECT * FROM {table.Name}";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            // Create a new instance of the IData implementation
-                            dataInstance = (IData)Activator.CreateInstance(table.DataType);
-
-                            // Loop through the properties list and set the values dynamically
-                            for (int i = 0; i < dataInstance.Properties.Count; i++)
+                            if (table.DataType.GetInterface("IListItem") != null)
                             {
-                                var property = dataInstance.Properties[i];
-                                var propertyType = property.Item1;
-                                var propertyName = property.Item2;
+                                // Create a new instance of the IData implementation
+                                IListItem dataInstance = (IListItem)Activator.CreateInstance(table.DataType);
 
-                                if (propertyName != null)
+                                // Loop through the properties list and set the values dynamically
+                                for (int i = 0; i < dataInstance.Properties.Count; i++)
                                 {
-                                    if (reader.IsDBNull(i))
-                                        continue;
+                                    var property = dataInstance.Properties[i];
+                                    var propertyType = property.Item1;
+                                    var propertyName = property.Item2;
+
+                                    if (propertyName != null)
+                                    {
+                                        if (reader.IsDBNull(i))
+                                            continue;
 
                                         // Use reflection to set the property value
                                         var propertyInfo = table.DataType.GetProperty(propertyName);
 
-                                    // Check if the property type is a class that inherits IData
-                                    if (propertyType.GetInterface("IData") != null)
-                                    {
-                                        var entry = GetEntryById(reader.GetInt32(i), propertyType);
-
-                                        if (entry == null && GetEntriesList(propertyType).Count == 0)
+                                        if (propertyType == typeof(int))
                                         {
-                                            Console.WriteLine("Could not read data from table '{0}' for the entry ID '{1}.{2}'. Make sure '{3}' is loaded before table '{4}'",
-                                                propertyName, dataInstance.TableName, dataInstance.ID, propertyName, dataInstance.TableName);
-                                            ConsoleExtensions.Pause();
-                                            return;
+                                            int value = reader.GetInt32(i);
+                                            propertyInfo.SetValue(dataInstance, value);
                                         }
-
-                                        propertyInfo.SetValue(dataInstance, entry);
-
-                                    }
-                                    else if (propertyType == typeof(int))
-                                    {
-                                        propertyInfo.SetValue(dataInstance, reader.GetInt32(i));
-                                    }
-                                    else if (propertyType == typeof(double))
-                                    {
-                                        propertyInfo.SetValue(dataInstance, reader.GetDouble(i));
-                                    }
-                                    else if (propertyType == typeof(string))
-                                    {
-                                        propertyInfo.SetValue(dataInstance, reader.GetString(i));
-                                    }
-                                    else if (propertyType == typeof(bool))
-                                    {
-                                        propertyInfo.SetValue(dataInstance, reader.GetBoolean(i));
+                                        else if (propertyType == typeof(double))
+                                        {
+                                            double value = reader.GetDouble(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                        else if (propertyType == typeof(string))
+                                        {
+                                            string value = reader.GetString(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                        else if (propertyType == typeof(bool))
+                                        {
+                                            bool value = reader.GetBoolean(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
                                     }
                                 }
+
+                                dataInstance.AssignComponents();
                             }
-
-                            /*
-                             *     public class Aircraft : IData
+                            else
                             {
-                                public string TableName { get; } = "DataAircraft";
 
-                                public static List<Aircraft> Entries { get; set; } = new List<Aircraft>();
-                            */
 
-                            // Add the datainstance to the respective Entries list
-                            var entriesType = table.DataType;
-                            dynamic entriesField = entriesType.GetProperty("DataEntries"); // Assuming there's a public field named "Entries"
-                            var entriesList = entriesField.GetValue(null) as List<IData>;
+                                // Create a new instance of the IData implementation
+                                IData dataInstance = (IData)Activator.CreateInstance(table.DataType);
 
-                            entriesList.Add(dataInstance);
+                                // Loop through the properties list and set the values dynamically
+                                for (int i = 0; i < dataInstance.Properties.Count; i++)
+                                {
+                                    var property = dataInstance.Properties[i];
+                                    var propertyType = property.Item1;
+                                    var propertyName = property.Item2;
+
+                                    if (propertyName != null)
+                                    {
+                                        if (reader.IsDBNull(i))
+                                            continue;
+
+                                        // Use reflection to set the property value
+                                        var propertyInfo = table.DataType.GetProperty(propertyName);
+
+                                        // Check if the property type is a class that inherits IData
+                                        if (propertyType.GetInterface("IData") != null)
+                                        {
+                                            if (propertyType == typeof(EnumAircraftCockpitVisibility))
+                                            {
+                                                string value = reader.GetString(i).Trim();
+                                                var entry = EnumAircraftCockpitVisibility.GetEntryById(value);
+                                                if (entry == null)
+                                                {
+
+                                                }
+                                                propertyInfo.SetValue(dataInstance, entry);
+                                            }
+                                            else
+                                            {
+                                                var entry = GetEntryById(reader.GetInt32(i), propertyType);
+
+                                                if (entry == null && GetEntriesList(propertyType).Count == 0)
+                                                {
+                                                    Console.WriteLine("Could not read data from table '{0}' for the entry ID '{1}.{2}'. Make sure '{3}' is loaded before table '{4}'",
+                                                        propertyName, table.Name, dataInstance.ID, propertyName, table.Name);
+                                                    ConsoleExtensions.Pause();
+                                                    return;
+                                                }
+
+                                                propertyInfo.SetValue(dataInstance, entry);
+                                            }
+                                        }
+                                        else if (propertyType == typeof(int))
+                                        {
+                                            int value = reader.GetInt32(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                        else if (propertyType == typeof(double))
+                                        {
+                                            double value = reader.GetDouble(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                        else if (propertyType == typeof(string))
+                                        {
+                                            string value = reader.GetString(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                        else if (propertyType == typeof(bool))
+                                        {
+                                            bool value = reader.GetBoolean(i);
+                                            propertyInfo.SetValue(dataInstance, value);
+                                        }
+                                    }
+                                }
+
+                                // Add the datainstance to the respective Entries list
+                                var entriesType = table.DataType;
+                                dynamic entriesField = entriesType.GetProperty("DataEntries"); // Assuming there's a public field named "Entries"
+                                var entriesList = entriesField.GetValue(null) as List<IData>;
+
+                                entriesList.Add(dataInstance);
+                            }
                         }
                     }
                 }

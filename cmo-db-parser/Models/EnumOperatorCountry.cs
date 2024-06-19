@@ -26,5 +26,23 @@ namespace cmo_db_parser.Models
         /// Represents the year the country was dissolved.
         /// </summary>
         public int YearEnd { get; set; }
+
+        //(string TwoLetterCode, string ThreeLetterCode, string CountryName, double Latitude, double Longitude, string Continent)
+        private string twoLetterCode = null;
+
+        public string TwoLetterCode
+        {
+            get
+            {
+                if (twoLetterCode == null)
+                {
+                    (string TwoLetterCode, string ThreeLetterCode, string CountryName, double Latitude, double Longitude, string Continent) iso3166Country = ISO3166Countries.GetTupleByCountryName(Description);
+
+                    twoLetterCode = iso3166Country.TwoLetterCode ?? "";
+                }
+                    
+                return twoLetterCode;
+            }
+        }
     }
 }

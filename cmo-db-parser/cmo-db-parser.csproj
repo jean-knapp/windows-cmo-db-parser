@@ -65,14 +65,25 @@
     <Compile Include="CMODatabase.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Export.cs" />
-    <Compile Include="Models\Aircraft.cs" />
+    <Compile Include="ISO3166Countries.cs" />
+    <Compile Include="Models\DataAircraft.cs" />
+    <Compile Include="Models\DataAircraftLoadouts.cs" />
+    <Compile Include="Models\DataLoadout.cs" />
     <Compile Include="Models\EnumAircraftCockpitGen.cs" />
     <Compile Include="Models\EnumAircraftAutonomousControlLevel.cs" />
+    <Compile Include="Models\EnumAircraftCockpitVisibility.cs" />
+    <Compile Include="Models\EnumArmorType.cs" />
+    <Compile Include="Models\EnumAircraftCategory.cs" />
+    <Compile Include="Models\EnumRunwayLength.cs" />
+    <Compile Include="Models\EnumErgonomics.cs" />
+    <Compile Include="Models\EnumAircraftPhysicalSize.cs" />
     <Compile Include="Models\EnumOperatorService.cs" />
     <Compile Include="Models\EnumAircraftType.cs" />
     <Compile Include="Models\IData.cs" />
     <Compile Include="Models\DataEnum.cs" />
     <Compile Include="Models\EnumOperatorCountry.cs" />
+    <Compile Include="Models\IDataTable.cs" />
+    <Compile Include="Models\IListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

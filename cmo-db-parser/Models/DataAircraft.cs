@@ -7,7 +7,7 @@ namespace cmo_db_parser.Models
     {
         public string TableName { get; } = "DataAircraft";
 
-        public static List<IData> DataEntries { get; set; } = new List<IData>();
+        public static Dictionary<int,IData> DataEntries { get; set; } = new Dictionary<int,IData>();
 
         public List<(Type, string)> Properties { get; } = new List<(Type, string)>()
         {
@@ -228,5 +228,7 @@ namespace cmo_db_parser.Models
         /// Indicates whether the aircraft is deprecated.
         /// </summary>
         public bool Deprecated { get; set; }
+
+        public List<DataLoadout> Loadouts { get; set; } = new List<DataLoadout>();
     }
 }

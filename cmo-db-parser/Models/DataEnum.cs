@@ -7,7 +7,7 @@ namespace cmo_db_parser.Models
     {
         public virtual string TableName { get; }
 
-        public static List<IData> DataEntries { get; set; } = new List<IData>();
+        public static Dictionary<int,IData> DataEntries { get; set; } = new Dictionary<int,IData>();
 
         public virtual List<(Type, string)> Properties { get; } = new List<(Type, string)>()
         {

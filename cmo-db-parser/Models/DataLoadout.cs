@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace cmo_db_parser.Models
 {
-    internal class DataLoadout : IData, IDataTable
+    public class DataLoadout : IData, IDataTable
     {
         public string TableName { get; } = "DataLoadout";
 
-        public static List<IData> DataEntries { get; set; } = new List<IData>();
+        public static Dictionary<int,IData> DataEntries { get; set; } = new Dictionary<int,IData>();
 
         public List<(Type, string)> Properties { get; } = new List<(Type, string)>()
         {
@@ -114,6 +114,6 @@ namespace cmo_db_parser.Models
 
         public bool Deprecated { get; set; }
 
-
+        public List<DataWeaponRecord> Weapons { get; set; } = new List<DataWeaponRecord>();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
 using System;
 
 namespace cmo_db_parser.Models
@@ -9,7 +8,7 @@ namespace cmo_db_parser.Models
         /// <summary>
         /// Represents the name of the table in the database.
         /// </summary>
-        public string TableName { get; }
+        public string TableName { get; } = "DataAircraftLoadouts";
 
         public List<(Type, string)> Properties { get; } = new List<(Type, string)>()
         {
@@ -32,29 +31,19 @@ namespace cmo_db_parser.Models
             DataAircraft aircraft = null;
             DataLoadout loadout = null;
 
-            // Find the aircraft with the ID equal to ID.
-            foreach(IData data in DataAircraft.DataEntries)
+            if (DataAircraft.DataEntries.ContainsKey(ID))
             {
-                if (data.ID ==  ID)
-                {
-                    aircraft = (DataAircraft)data;
-                    break;
-                }
+                aircraft = DataAircraft.DataEntries[ID] as DataAircraft;
             }
 
-            // Find the loadout with the ID equal to ID.
-            foreach(IData data in DataLoadout.DataEntries)
+            if (DataLoadout.DataEntries.ContainsKey(ComponentID))
             {
-                if (data.ID == ComponentID)
-                {
-                    loadout = (DataLoadout)data;
-                    break;
-                }
+                loadout = DataLoadout.DataEntries[ComponentID] as DataLoadout;
             }
 
-            if (aircraft != null && aircraft.Name == "A-29A Super Tucano [EMB-314]")
+            if (aircraft != null && loadout != null)
             {
-
+                    aircraft.Loadouts.Add(loadout);
             }
         }
     }

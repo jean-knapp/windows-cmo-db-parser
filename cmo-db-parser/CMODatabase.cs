@@ -32,9 +32,18 @@ namespace cmo_db_parser
             ("EnumArmorType", typeof(EnumArmorType)),
             ("EnumAircraftCockpitVisibility", typeof(EnumAircraftCockpitVisibility)),
             ("EnumAircraftCategory", typeof(EnumAircraftCategory)),
+            ("EnumWeaponGeneration", typeof(EnumWeaponGeneration)),
+            ("EnumWeaponType", typeof(EnumWeaponType)),
             ("DataAircraft", typeof(DataAircraft)),
+            ("EnumWarheadExplosivesType", typeof(EnumWarheadExplosivesType)),
+            ("EnumCargoType", typeof(EnumCargoType)),
+            ("DataWarhead", typeof(DataWarhead)),
+            ("DataWeapon", typeof(DataWeapon)),
+            ("DataWeaponRecord", typeof(DataWeaponRecord)),
             ("DataLoadout", typeof(DataLoadout)),
-            ("DataAircraftLoadouts", typeof(DataAircraftLoadouts))
+            ("DataAircraftLoadouts", typeof(DataAircraftLoadouts)),
+            ("DataLoadoutWeapons", typeof(DataLoadoutWeapons)),
+            ("DataWeaponWarheads", typeof(DataWeaponWarheads))
         };
 
         /// <summary>
@@ -63,14 +72,20 @@ namespace cmo_db_parser
         private static IData GetEntryById(int id, Type type)
         {
             var entriesList = GetEntriesList(type);
-            return entriesList.FirstOrDefault(x => x.ID == id);
+
+            if (entriesList.ContainsKey(id))
+            {
+                return entriesList[id];
+            }
+
+            return null;
         }
 
-        private static List<IData> GetEntriesList(Type type)
+        private static Dictionary<int, IData> GetEntriesList(Type type)
         {
             var entriesType = type;
             dynamic entriesField = entriesType.GetProperty("DataEntries"); // Assuming there's a public field named "Entries"
-            var entriesList = entriesField.GetValue(null) as List<IData>;
+            var entriesList = entriesField.GetValue(null) as Dictionary<int, IData>;
 
             return entriesList;
         }
@@ -86,6 +101,7 @@ namespace cmo_db_parser
 
             foreach (var table in DataTables)
             {
+                Console.WriteLine($"Reading table {table.Name}");
                 string query = $"SELECT * FROM {table.Name}";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
@@ -214,9 +230,9 @@ namespace cmo_db_parser
                                 // Add the datainstance to the respective Entries list
                                 var entriesType = table.DataType;
                                 dynamic entriesField = entriesType.GetProperty("DataEntries"); // Assuming there's a public field named "Entries"
-                                var entriesList = entriesField.GetValue(null) as List<IData>;
+                                var entriesList = entriesField.GetValue(null) as Dictionary<int, IData>;
 
-                                entriesList.Add(dataInstance);
+                                entriesList[dataInstance.ID] = dataInstance;
                             }
                         }
                     }

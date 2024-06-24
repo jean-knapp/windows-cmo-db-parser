@@ -11,21 +11,21 @@ namespace cmo_db_parser
         internal static void ExportCSVs()
         {
             // Query the user to type a string of two characters matching the TwoLetterCode of the ISO.
-            //Console.WriteLine("Insert the two letter country code defined in the ISO 3166-1.");
-            //string twoLetterCode = Console.ReadLine().ToUpper();
+            Console.WriteLine("Insert the two letter country code defined in the ISO 3166-1.");
+            string twoLetterCode = Console.ReadLine().ToUpper();
             Console.Clear();
 
-            /*if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}"))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}"))
             {
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}");
-            }*/
+            }
 
             //TestExport();
-            ExportLoadouts();
+            ExportLoadouts(twoLetterCode);
             //ExportExplosiveTypes();
             //ExportLoadouts();
             //ExportWeapons();
-            //ExportAircrafts(twoLetterCode);
+            ExportAircrafts(twoLetterCode);
         }
 
         public static void ExportExplosiveTypes()
@@ -313,7 +313,7 @@ namespace cmo_db_parser
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}\\aircrafts.csv", sb.ToString());
         }
 
-        private static void ExportLoadouts()
+        private static void ExportLoadouts(string twoLetterCode)
         {
             // Let's export a table with the aircraft name, country, service and comissioned year.
             // We will repeat the rows for as many loadouts as it have. So let's add another column for the loadout data.
@@ -321,10 +321,30 @@ namespace cmo_db_parser
 
             StringBuilder sb = new StringBuilder();
 
+            // Add a header to the csv
+            sb.AppendLine(
+                $"Aircraft;" +
+                $"Country;" +
+                $"Service;" +
+                $"YearCommissioned;" +
+                $"LoadoutID;" +
+                $"LoadoutName;" +
+                $"CombatRadius;" +
+                $"WeaponName;" +
+                $"DefaultLoad;" +
+                $"MaxLoad"
+                );
+
             foreach (System.Collections.Generic.KeyValuePair<int, IData> aircraft in DataAircraft.DataEntries)
             {
                 DataAircraft dataAircraft = aircraft.Value as DataAircraft;
-                foreach(DataLoadout dataLoadout in dataAircraft.Loadouts)
+
+                if (dataAircraft.OperatorCountry.TwoLetterCode != twoLetterCode)
+                {
+                    continue;
+                }
+
+                foreach (DataLoadout dataLoadout in dataAircraft.Loadouts)
                 {
   
                     foreach(DataWeaponRecord dataWeaponRecord in dataLoadout.Weapons)
@@ -333,26 +353,26 @@ namespace cmo_db_parser
 
                         sb.AppendLine(
                             // Aircraft
-                            $"{dataAircraft.Name}; " +
-                            $"{dataAircraft.OperatorCountry.TwoLetterCode}; " +
-                            $"{dataAircraft.OperatorService.Description}; " +
-                            $"{dataAircraft.YearCommissioned}; " +
+                            $"{dataAircraft.Name};" +
+                            $"{dataAircraft.OperatorCountry.TwoLetterCode};" +
+                            $"{dataAircraft.OperatorService.Description};" +
+                            $"{dataAircraft.YearCommissioned};" +
 
                             // Loadout
                             $"{dataLoadout.ID};" +
-                            $"{dataLoadout.Name}; " +
-                            $"{dataLoadout.DefaultCombatRadius}; " +
+                            $"{dataLoadout.Name};" +
+                            $"{dataLoadout.DefaultCombatRadius};" +
 
                             // Weapon
-                            $"{dataWeapon.Name}; " +
-                            $"{dataWeaponRecord.DefaultLoad}; " +
+                            $"{dataWeapon.Name};" +
+                            $"{dataWeaponRecord.DefaultLoad};" +
                             $"{dataWeaponRecord.MaxLoad}"
                             );
                     }
                 }
             }
 
-            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"output\\loadouts.csv", sb.ToString());
+            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}\\loadouts.csv", sb.ToString());
         }
     }
 }

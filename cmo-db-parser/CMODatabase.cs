@@ -227,6 +227,14 @@ namespace cmo_db_parser
                                     }
                                 }
 
+                                if (table.Name == "EnumAircraftCockpitVisibility")
+                                {
+                                    if (dataInstance.ID == 0)
+                                    {
+                                        dataInstance.ID = EnumAircraftCockpitVisibility.DataEntries.Count + 1;
+                                    }
+                                }
+
                                 // Add the datainstance to the respective Entries list
                                 var entriesType = table.DataType;
                                 dynamic entriesField = entriesType.GetProperty("DataEntries"); // Assuming there's a public field named "Entries"

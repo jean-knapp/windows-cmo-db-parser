@@ -20,7 +20,8 @@ namespace cmo_db_parser
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}");
             }*/
 
-            TestExport();
+            //TestExport();
+            ExportLoadouts();
             //ExportExplosiveTypes();
             //ExportLoadouts();
             //ExportWeapons();
@@ -55,7 +56,7 @@ namespace cmo_db_parser
         public static void TestExport()
         {
             DataAircraft dataAircraft = null;
-            foreach(var item in DataAircraft.DataEntries.Values)
+            foreach (var item in DataAircraft.DataEntries.Values)
             {
                 if ((item as DataAircraft).Name == "A-29B Super Tucano [EMB-314]")
                 {
@@ -64,11 +65,11 @@ namespace cmo_db_parser
                 }
             }
 
-            foreach(DataLoadout dataLoadout in dataAircraft.Loadouts)
+            foreach (DataLoadout dataLoadout in dataAircraft.Loadouts)
             {
                 Console.WriteLine($"{dataLoadout.Name} ({dataLoadout.ID})");
 
-                foreach(DataWeaponRecord dataWeapon in dataLoadout.Weapons)
+                foreach (DataWeaponRecord dataWeapon in dataLoadout.Weapons)
                 {
                     Console.WriteLine($"{dataWeapon.Weapon.Name} - {dataWeapon.DefaultLoad}x - {dataWeapon.Weapon.Type.Description} - CEP {dataWeapon.Weapon.CEP}/{dataWeapon.Weapon.CEPSurface} ({dataWeapon.ID})");
                 }
@@ -310,6 +311,48 @@ namespace cmo_db_parser
             }
 
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"output\\{twoLetterCode}\\aircrafts.csv", sb.ToString());
+        }
+
+        private static void ExportLoadouts()
+        {
+            // Let's export a table with the aircraft name, country, service and comissioned year.
+            // We will repeat the rows for as many loadouts as it have. So let's add another column for the loadout data.
+            // And then we will also repeat the lines for as many weapons as the loadout have.
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (System.Collections.Generic.KeyValuePair<int, IData> aircraft in DataAircraft.DataEntries)
+            {
+                DataAircraft dataAircraft = aircraft.Value as DataAircraft;
+                foreach(DataLoadout dataLoadout in dataAircraft.Loadouts)
+                {
+  
+                    foreach(DataWeaponRecord dataWeaponRecord in dataLoadout.Weapons)
+                    {
+                        DataWeapon dataWeapon = dataWeaponRecord.Weapon;
+
+                        sb.AppendLine(
+                            // Aircraft
+                            $"{dataAircraft.Name}; " +
+                            $"{dataAircraft.OperatorCountry.TwoLetterCode}; " +
+                            $"{dataAircraft.OperatorService.Description}; " +
+                            $"{dataAircraft.YearCommissioned}; " +
+
+                            // Loadout
+                            $"{dataLoadout.ID};" +
+                            $"{dataLoadout.Name}; " +
+                            $"{dataLoadout.DefaultCombatRadius}; " +
+
+                            // Weapon
+                            $"{dataWeapon.Name}; " +
+                            $"{dataWeaponRecord.DefaultLoad}; " +
+                            $"{dataWeaponRecord.MaxLoad}"
+                            );
+                    }
+                }
+            }
+
+            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"output\\loadouts.csv", sb.ToString());
         }
     }
 }

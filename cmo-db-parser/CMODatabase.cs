@@ -141,7 +141,7 @@ namespace cmo_db_parser
                                         }
                                         else if (propertyType == typeof(string))
                                         {
-                                            string value = reader.GetString(i);
+                                            string value = reader.GetString(i).Trim();
                                             propertyInfo.SetValue(dataInstance, value);
                                         }
                                         else if (propertyType == typeof(bool))

@@ -1,18 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3D900487-1334-4454-BAC0-A0B2A1D9295C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>cmo_db_parser</RootNamespace>
-    <AssemblyName>cmo-db-parser</AssemblyName>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cmo_db_viewer</RootNamespace>
+    <AssemblyName>cmo-db-viewer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -36,6 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v24.2" />
+    <Reference Include="DevExpress.Data.Desktop.v24.2" />
+    <Reference Include="DevExpress.Data.v24.2" />
+    <Reference Include="DevExpress.Utils.v24.2" />
+    <Reference Include="DevExpress.Sparkline.v24.2.Core" />
+    <Reference Include="DevExpress.XtraBars.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v24.2" />
+    <Reference Include="DevExpress.Printing.v24.2.Core" />
+    <Reference Include="DevExpress.Drawing.v24.2" />
+    <Reference Include="DevExpress.XtraLayout.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v24.2, Version=24.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -43,6 +53,9 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -54,11 +67,23 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.118.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +91,20 @@
     <Compile Include="Console.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="ISO3166Countries.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataAircraft.cs" />
     <Compile Include="Models\DataAircraftFacility.cs" />
-    <Compile Include="Models\DataLoadoutWeapons.cs" />
+    <Compile Include="Models\DataAircraftFuel.cs" />
     <Compile Include="Models\DataAircraftLoadouts.cs" />
+    <Compile Include="Models\DataEnum.cs" />
+    <Compile Include="Models\DataFuel.cs" />
     <Compile Include="Models\DataLoadout.cs" />
+    <Compile Include="Models\DataLoadoutWeapons.cs" />
     <Compile Include="Models\DataMount.cs" />
     <Compile Include="Models\DataMountWeapons.cs" />
     <Compile Include="Models\DataShip.cs" />
@@ -80,37 +114,86 @@
     <Compile Include="Models\DataWeapon.cs" />
     <Compile Include="Models\DataWeaponRecord.cs" />
     <Compile Include="Models\DataWeaponWarheads.cs" />
-    <Compile Include="Models\EnumAircraftFacilityType.cs" />
-    <Compile Include="Models\EnumShipPhysicalSize.cs" />
-    <Compile Include="Models\EnumShipCSGen.cs" />
-    <Compile Include="Models\EnumShipType.cs" />
-    <Compile Include="Models\EnumShipCategory.cs" />
-    <Compile Include="Models\EnumAircraftCockpitGen.cs" />
     <Compile Include="Models\EnumAircraftAutonomousControlLevel.cs" />
-    <Compile Include="Models\EnumAircraftCockpitVisibility.cs" />
-    <Compile Include="Models\EnumLoadoutRole.cs" />
-    <Compile Include="Models\EnumArmorType.cs" />
     <Compile Include="Models\EnumAircraftCategory.cs" />
-    <Compile Include="Models\EnumCargoType.cs" />
-    <Compile Include="Models\EnumRunwayLength.cs" />
-    <Compile Include="Models\EnumErgonomics.cs" />
+    <Compile Include="Models\EnumAircraftCockpitGen.cs" />
+    <Compile Include="Models\EnumAircraftCockpitVisibility.cs" />
+    <Compile Include="Models\EnumAircraftFacilityType.cs" />
     <Compile Include="Models\EnumAircraftPhysicalSize.cs" />
-    <Compile Include="Models\EnumOperatorService.cs" />
     <Compile Include="Models\EnumAircraftType.cs" />
+    <Compile Include="Models\EnumFuelType.cs" />
+    <Compile Include="Models\EnumArmorType.cs" />
+    <Compile Include="Models\EnumCargoType.cs" />
+    <Compile Include="Models\EnumErgonomics.cs" />
+    <Compile Include="Models\EnumLoadoutWeather.cs" />
+    <Compile Include="Models\EnumLoadoutTimeOfDay.cs" />
+    <Compile Include="Models\EnumLoadoutRole.cs" />
+    <Compile Include="Models\EnumOperatorCountry.cs" />
+    <Compile Include="Models\EnumOperatorService.cs" />
+    <Compile Include="Models\EnumRunwayLength.cs" />
+    <Compile Include="Models\EnumShipCategory.cs" />
+    <Compile Include="Models\EnumShipCSGen.cs" />
+    <Compile Include="Models\EnumShipPhysicalSize.cs" />
+    <Compile Include="Models\EnumShipType.cs" />
     <Compile Include="Models\EnumWarheadExplosivesType.cs" />
     <Compile Include="Models\EnumWeaponGeneration.cs" />
     <Compile Include="Models\EnumWeaponType.cs" />
     <Compile Include="Models\IData.cs" />
-    <Compile Include="Models\DataEnum.cs" />
-    <Compile Include="Models\EnumOperatorCountry.cs" />
     <Compile Include="Models\IDataTable.cs" />
     <Compile Include="Models\IListItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="SplashScreen1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen1.Designer.cs">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AircraftPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AircraftPanel.Designer.cs">
+      <DependentUpon>AircraftPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AircraftsListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AircraftsListPanel.Designer.cs">
+      <DependentUpon>AircraftsListPanel.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AircraftPanel.resx">
+      <DependentUpon>AircraftPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AircraftsListPanel.resx">
+      <DependentUpon>AircraftsListPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -123,4 +206,11 @@
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.118.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

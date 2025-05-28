@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmo-db-parser", "cmo-db-parser\cmo-db-parser.csproj", "{3D900487-1334-4454-BAC0-A0B2A1D9295C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmo-db-viewer", "cmo-db-viewer\cmo-db-viewer.csproj", "{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D900487-1334-4454-BAC0-A0B2A1D9295C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D900487-1334-4454-BAC0-A0B2A1D9295C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D900487-1334-4454-BAC0-A0B2A1D9295C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC635D2-B77F-4C45-A9E9-9AA11C25B399}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

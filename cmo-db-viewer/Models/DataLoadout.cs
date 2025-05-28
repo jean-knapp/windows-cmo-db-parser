@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cmo_db_parser.Models
+namespace cmo_db_viewer.Models
 {
     public class DataLoadout : IData, IDataTable
     {
@@ -22,8 +22,8 @@ namespace cmo_db_parser.Models
             (typeof(int), nameof(ReadyTime)),
             (typeof(int), nameof(ReadyTimeSustained)),
             (typeof(EnumLoadoutRole), nameof(LoadoutRole)),
-            (typeof(int), nameof(TimeOfDay)),
-            (typeof(int), nameof(Weather)),
+            (typeof(EnumLoadoutTimeOfDay), nameof(TimeOfDay)),
+            (typeof(EnumLoadoutWeather), nameof(Weather)),
             (typeof(double), nameof(PayloadWeightDragModifier)),
             (typeof(int), nameof(DefaultCombatRadius)),
             (typeof(int), nameof(DefaultTimeOnStation)),
@@ -37,7 +37,7 @@ namespace cmo_db_parser.Models
             (typeof(int), nameof(QuickTurnaroundAirborneTime)),
             (typeof(int), nameof(QuickTurnaroundTimeOfDay)),
             (typeof(int), nameof(WinchesterShotgun)),
-            (typeof(int), nameof(CargoType)),
+            (typeof(EnumCargoType), nameof(CargoType)),
             (typeof(double), nameof(CargoMass)),
             (typeof(double), nameof(CargoArea)),
             (typeof(double), nameof(CargoCrew)),
@@ -70,9 +70,9 @@ namespace cmo_db_parser.Models
 
         public EnumLoadoutRole LoadoutRole { get; set; }
 
-        public int TimeOfDay { get; set; }
+        public EnumLoadoutTimeOfDay TimeOfDay { get; set; }
 
-        public int Weather { get; set; }
+        public EnumLoadoutWeather Weather { get; set; }
 
         public double PayloadWeightDragModifier { get; set; }
 
@@ -100,7 +100,7 @@ namespace cmo_db_parser.Models
 
         public int WinchesterShotgun { get; set; }
 
-        public int CargoType { get; set; }
+        public EnumCargoType CargoType { get; set; }
 
         public double CargoMass { get; set; }
 

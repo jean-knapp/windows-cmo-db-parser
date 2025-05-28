@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace cmo_db_parser
+namespace cmo_db_viewer
 {
     internal class ISO3166Countries
     {

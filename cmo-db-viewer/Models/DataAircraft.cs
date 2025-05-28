@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace cmo_db_parser.Models
+namespace cmo_db_viewer.Models
 {
     public class DataAircraft : IData, IDataTable
     {
@@ -230,6 +230,7 @@ namespace cmo_db_parser.Models
         public bool Deprecated { get; set; }
 
         public List<DataLoadout> Loadouts { get; set; } = new List<DataLoadout>();
+        public List<DataFuel> Fuel { get; set; } = new List<DataFuel>();
         public string Description { get; internal set; } = "";
     }
 }

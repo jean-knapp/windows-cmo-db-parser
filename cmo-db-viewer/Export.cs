@@ -1,11 +1,11 @@
-﻿using cmo_db_parser.Models;
+﻿using cmo_db_viewer.Models;
 using System;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace cmo_db_parser
+namespace cmo_db_viewer
 {
     internal class Export
     {
@@ -38,7 +38,7 @@ namespace cmo_db_parser
 
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("using System.Collections.Generic;\r\n\r\nnamespace cmo_db_parser\r\n{\r\n    internal class ISO3166Countries\r\n    {\r\n        public static List<(string TwoLetterCode, string ThreeLetterCode, string CountryName, string OSMCountryName, double Latitude, double Longitude, string Continent)> Entries = new List<(string TwoLetterCode, string ThreeLetterCode, string CountryName, double Latitude, double Longitude, string Continent)>\r\n        {");
+            sb.AppendLine("using System.Collections.Generic;\r\n\r\nnamespace cmo_db_viewer\r\n{\r\n    internal class ISO3166Countries\r\n    {\r\n        public static List<(string TwoLetterCode, string ThreeLetterCode, string CountryName, string OSMCountryName, double Latitude, double Longitude, string Continent)> Entries = new List<(string TwoLetterCode, string ThreeLetterCode, string CountryName, double Latitude, double Longitude, string Continent)>\r\n        {");
 
             foreach(var dataEntry in EnumOperatorCountry.DataEntries)
             {

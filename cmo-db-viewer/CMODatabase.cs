@@ -1,4 +1,4 @@
-﻿using cmo_db_parser.Models;
+﻿using cmo_db_viewer.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -8,7 +8,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cmo_db_parser
+namespace cmo_db_viewer
 {
     internal class CMODatabase
     {
@@ -35,6 +35,8 @@ namespace cmo_db_parser
             ("EnumAircraftCategory", typeof(EnumAircraftCategory)),
             ("EnumWeaponGeneration", typeof(EnumWeaponGeneration)),
             ("EnumWeaponType", typeof(EnumWeaponType)),
+            ("EnumFuelType", typeof(EnumFuelType)),
+            ("DataFuel", typeof(DataFuel)),
             ("DataAircraft", typeof(DataAircraft)),
             ("EnumWarheadExplosivesType", typeof(EnumWarheadExplosivesType)),
             ("EnumCargoType", typeof(EnumCargoType)),
@@ -42,8 +44,11 @@ namespace cmo_db_parser
             ("DataWeapon", typeof(DataWeapon)),
             ("DataWeaponRecord", typeof(DataWeaponRecord)),
             ("EnumLoadoutRole", typeof(EnumLoadoutRole)),
+            ("EnumLoadoutTimeOfDay", typeof(EnumLoadoutTimeOfDay)),
+            ("EnumLoadoutWeather", typeof(EnumLoadoutWeather)),
             ("DataLoadout", typeof(DataLoadout)),
             ("DataAircraftLoadouts", typeof(DataAircraftLoadouts)),
+            ("DataAircraftFuel", typeof(DataAircraftFuel)),
             ("DataLoadoutWeapons", typeof(DataLoadoutWeapons)),
             ("DataWeaponWarheads", typeof(DataWeaponWarheads)),
             ("EnumShipCategory", typeof(EnumShipCategory)),

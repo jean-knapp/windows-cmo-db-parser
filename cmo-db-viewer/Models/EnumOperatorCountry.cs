@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace cmo_db_parser.Models
+namespace cmo_db_viewer.Models
 {
     public class EnumOperatorCountry : DataEnum
     {
